@@ -1,4 +1,6 @@
 class Redis
+  require 'json'
+
   class Store < self
     module Marshalling
       def set(key, value, options = nil)
@@ -30,7 +32,7 @@ class Redis
         end
 
         def _unmarshal(val, options)
-          unmarshal?(val, options) ? ActiveSupport::JSON.decode(val) : val
+          unmarshal?(val, options) ? JSON.parse(val) : val
         end
 
         def marshal?(options)
