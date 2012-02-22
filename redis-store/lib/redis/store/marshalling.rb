@@ -26,11 +26,11 @@ class Redis
 
       private
         def _marshal(val, options)
-          yield marshal?(options) ? Marshal.dump(val) : val
+          yield marshal?(options) ? val.to_json : val
         end
 
         def _unmarshal(val, options)
-          unmarshal?(val, options) ? Marshal.load(val) : val
+          unmarshal?(val, options) ? ActiveSupport::JSON.decode(val) : val
         end
 
         def marshal?(options)
